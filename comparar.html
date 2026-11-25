@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparar textos</title><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#2563eb">
+<style>:root{--bg:#f6f7f9;--card:#fff;--fg:#1c2330;--mut:#667085;--bd:#d9dde5;--pri:#2563eb;--pri-fg:#fff;--err:#c0262d;--ok:#157f3b;--warn:#a15c00;--sel:rgba(37,99,235,.08)}
+@media (prefers-color-scheme:dark){:root{--bg:#14171d;--card:#1d2230;--fg:#e8ebf2;--mut:#98a2b3;--bd:#323a4d;--pri:#4b82f0;--err:#ff7b80;--ok:#4ad07a;--warn:#f0b24a;--sel:rgba(75,130,240,.15)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1180px;margin:0 auto;padding:20px}
+header.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+header.top a.back{color:var(--pri);text-decoration:none;font-size:14px}
+header.top h1{font-size:22px;margin:0}
+header.top .sub{color:var(--mut);font-size:14px;flex-basis:100%}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px 16px;margin-bottom:14px}
+.card h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);margin:0 0 10px}
+button,.btn{font:inherit;padding:7px 14px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--fg);cursor:pointer;text-decoration:none;display:inline-block}
+button:hover:not(:disabled),.btn:hover{border-color:var(--pri)}
+button.primary{background:var(--pri);color:var(--pri-fg);border-color:var(--pri)}
+button.danger{color:var(--err)}
+button.small{padding:3px 9px;font-size:13px}
+button:disabled{opacity:.5;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.mt{margin-top:10px}
+.spacer{flex:1}
+label{display:block;font-size:13px;color:var(--mut);margin-bottom:3px}
+input[type=text],input[type=number],input[type=date],input[type=search],select,textarea{width:100%;font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--fg)}
+textarea{resize:vertical;min-height:70px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 16px}
+.chk{display:flex;gap:6px;align-items:center;color:var(--fg);font-size:14px}
+.chk input{width:auto}
+.note{color:var(--mut);font-size:13px}
+.drop{border:2px dashed var(--bd);border-radius:10px;padding:18px;text-align:center;color:var(--mut);transition:.15s}
+.drop.over{border-color:var(--pri);background:var(--sel)}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--bd);font-size:14px;vertical-align:top}
+th{color:var(--mut);font-weight:600;white-space:nowrap}
+th.sortable{cursor:pointer;user-select:none}
+.tablewrap{overflow-x:auto}
+td.trunc{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+td.act{white-space:nowrap}
+.badge{display:inline-block;padding:1px 9px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid transparent;white-space:nowrap}
+.b-ok{background:#dff5e6;color:#0c5a28;border-color:#bfe6cb}
+.b-warn{background:#fff1d6;color:#7a4a00;border-color:#f1d9a3}
+.b-bad{background:#ffe0d6;color:#8a2a05;border-color:#f2bfae}
+.b-crit{background:#f8d4d4;color:#7a0d0d;border-color:#ecb1b1}
+.b-mut{background:#eceff4;color:#475467;border-color:#d9dde5}
+@media (prefers-color-scheme:dark){.b-ok{background:#12351f;color:#8de0ab;border-color:#1f5a35}.b-warn{background:#3a2c0d;color:#f3c777;border-color:#6b4f12}.b-bad{background:#3d1f14;color:#f5a98a;border-color:#6b3320}.b-crit{background:#401414;color:#f59a9a;border-color:#702020}.b-mut{background:#272d3d;color:#b4bccd;border-color:#3a4258}}
+dialog{border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--fg);padding:18px 20px;max-width:760px;width:calc(100% - 24px)}
+dialog::backdrop{background:rgba(0,0,0,.4)}
+dialog h3{margin:0 0 12px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#1c2330;color:#fff;padding:9px 16px;border-radius:8px;font-size:14px;z-index:99;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{border-radius:999px}
+.tabs button.on{background:var(--pri);color:var(--pri-fg);border-color:var(--pri)}
+.warnbox{background:#fff6e0;color:#6b4300;border:1px solid #f0d9a0;border-radius:8px;padding:9px 12px;font-size:14px;margin-bottom:12px}
+@media (prefers-color-scheme:dark){.warnbox{background:#362a0c;color:#f3d79a;border-color:#6b4f12}}
+.list{list-style:none;margin:0;padding:0}
+.list li{display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--bd)}
+.list li .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.thumb{border:1px solid var(--bd);border-radius:8px;padding:6px;text-align:center;background:var(--card)}
+.thumb canvas,.thumb img{max-width:100%;height:auto;border:1px solid var(--bd);background:#fff}
+.thumb .tools{display:flex;gap:3px;justify-content:center;margin-top:5px;flex-wrap:wrap}
+.stat{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.stat .s{border:1px solid var(--bd);border-radius:8px;padding:6px 12px;background:var(--card)}
+.stat .s b{display:block;font-size:20px}
+.bar{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--bd);margin:6px 0}
+.bar span{display:block;height:100%}
+progress{width:100%;height:10px}
+pre.out,textarea.out{width:100%;min-height:260px;font:13px/1.4 ui-monospace,Consolas,monospace}
+.diff{font:13px/1.5 ui-monospace,Consolas,monospace;white-space:pre-wrap;word-break:break-word;border:1px solid var(--bd);border-radius:8px;padding:8px;max-height:560px;overflow:auto;background:var(--card)}
+.diff .add{background:#cdeed7;color:#0c3d1d}.diff .del{background:#f8d0d0;color:#5c1010;text-decoration:line-through}
+@media (prefers-color-scheme:dark){.diff .add{background:#1a4a2c;color:#bdf0cf}.diff .del{background:#561b1b;color:#f6c4c4}}
+.hm{border-collapse:separate;border-spacing:3px;width:auto}
+.hm th.axis{text-align:right;white-space:nowrap}
+.hm tr:last-child th.axis{text-align:center;white-space:normal;line-height:1.2}
+.hm td,.hm th{border:0;text-align:center;padding:0}
+.hm td.cell{width:62px;height:46px;border-radius:6px;font-weight:700;cursor:pointer;font-size:15px;color:#1c2330}
+.hm td.cell.sel{outline:3px solid var(--pri)}
+.hm .axis{font-size:12px;color:var(--mut);padding:2px 6px}
+</style></head><body><main><header class="top"><a class="back" href="index.html">← Todas as ferramentas</a><h1>Comparar textos</h1><div class="sub">Destaque o que foi adicionado e removido entre duas versões.</div></header><div id="app"></div></main><script>(()=>{var h=class{diff(e,t,n={}){let r;typeof n=="function"?(r=n,n={}):"callback"in n&&(r=n.callback);let i=this.castInput(e,n),s=this.castInput(t,n),c=this.removeEmpty(this.tokenize(i,n)),u=this.removeEmpty(this.tokenize(s,n));return this.diffWithOptionsObj(c,u,n,r)}diffWithOptionsObj(e,t,n,r){var i;let s=f=>{if(f=this.postProcess(f,n),r){setTimeout(function(){r(f)},0);return}else return f},c=t.length,u=e.length,l=1,a=c+u;n.maxEditLength!=null&&(a=Math.min(a,n.maxEditLength));let p=(i=n.timeout)!==null&&i!==void 0?i:1/0,P=Date.now()+p,m=[{oldPos:-1,lastComponent:void 0}],v=this.extractCommon(m[0],t,e,0,n);if(m[0].oldPos+1>=u&&v+1>=c)return s(this.buildValues(m[0].lastComponent,t,e));let T=-1/0,$=1/0,H=()=>{for(let f=Math.max(T,-l);f<=Math.min($,l);f+=2){let g,b=m[f-1],y=m[f+1];b&&(m[f-1]=void 0);let k=!1;if(y){let U=y.oldPos-f;k=y&&0<=U&&U<c}let V=b&&b.oldPos+1<u;if(!k&&!V){m[f]=void 0;continue}if(!V||k&&b.oldPos<y.oldPos?g=this.addToPath(y,!0,!1,0,n):g=this.addToPath(b,!1,!0,1,n),v=this.extractCommon(g,t,e,f,n),g.oldPos+1>=u&&v+1>=c)return s(this.buildValues(g.lastComponent,t,e))||!0;m[f]=g,g.oldPos+1>=u&&($=Math.min($,f-1)),v+1>=c&&(T=Math.max(T,f+1))}l++};if(r)(function f(){setTimeout(function(){if(l>a||Date.now()>P)return r(void 0);H()||f()},0)})();else for(;l<=a&&Date.now()<=P;){let f=H();if(f)return f}}addToPath(e,t,n,r,i){let s=e.lastComponent;return s&&!i.oneChangePerToken&&s.added===t&&s.removed===n?{oldPos:e.oldPos+r,lastComponent:{count:s.count+1,added:t,removed:n,previousComponent:s.previousComponent}}:{oldPos:e.oldPos+r,lastComponent:{count:1,added:t,removed:n,previousComponent:s}}}extractCommon(e,t,n,r,i){let s=t.length,c=n.length,u=e.oldPos,l=u-r,a=0;for(;l+1<s&&u+1<c&&this.equals(n[u+1],t[l+1],i);)l++,u++,a++,i.oneChangePerToken&&(e.lastComponent={count:1,previousComponent:e.lastComponent,added:!1,removed:!1});return a&&!i.oneChangePerToken&&(e.lastComponent={count:a,previousComponent:e.lastComponent,added:!1,removed:!1}),e.oldPos=u,l}equals(e,t,n){return n.comparator?n.comparator(e,t):e===t||!!n.ignoreCase&&e.toLowerCase()===t.toLowerCase()}removeEmpty(e){let t=[];for(let n=0;n<e.length;n++)e[n]&&t.push(e[n]);return t}castInput(e,t){return e}tokenize(e,t){return Array.from(e)}join(e){return e.join("")}postProcess(e,t){return e}get useLongestToken(){return!1}buildValues(e,t,n){let r=[],i;for(;e;)r.push(e),i=e.previousComponent,delete e.previousComponent,e=i;r.reverse();let s=r.length,c=0,u=0,l=0;for(;c<s;c++){let a=r[c];if(a.removed)a.value=this.join(n.slice(l,l+a.count)),l+=a.count;else{if(!a.added&&this.useLongestToken){let p=t.slice(u,u+a.count);p=p.map(function(P,m){let v=n[l+m];return v.length>P.length?v:P}),a.value=this.join(p)}else a.value=this.join(t.slice(u,u+a.count));u+=a.count,a.added||(l+=a.count)}}return r}};var O=class extends h{},Y=new O;function I(o,e,t){return Y.diff(o,e,t)}function M(o,e){let t;for(t=0;t<o.length&&t<e.length;t++)if(o[t]!=e[t])return o.slice(0,t);return o.slice(0,t)}function A(o,e){let t;if(!o||!e||o[o.length-1]!=e[e.length-1])return"";for(t=0;t<o.length&&t<e.length;t++)if(o[o.length-(t+1)]!=e[e.length-(t+1)])return o.slice(-t);return o.slice(-t)}function E(o,e,t){if(o.slice(0,e.length)!=e)throw Error(`string ${JSON.stringify(o)} doesn't start with prefix ${JSON.stringify(e)}; this is a bug`);return t+o.slice(e.length)}function W(o,e,t){if(!e)return o+t;if(o.slice(-e.length)!=e)throw Error(`string ${JSON.stringify(o)} doesn't end with suffix ${JSON.stringify(e)}; this is a bug`);return o.slice(0,-e.length)+t}function w(o,e){return E(o,e,"")}function D(o,e){return W(o,e,"")}function F(o,e){return e.slice(0,ie(o,e))}function ie(o,e){let t=0;o.length>e.length&&(t=o.length-e.length);let n=e.length;o.length<e.length&&(n=o.length);let r=Array(n),i=0;r[0]=0;for(let s=1;s<n;s++){for(e[s]==e[i]?r[s]=r[i]:r[s]=i;i>0&&e[s]!=e[i];)i=r[i];e[s]==e[i]&&i++}i=0;for(let s=t;s<o.length;s++){for(;i>0&&o[s]!=e[i];)i=r[i];o[s]==e[i]&&i++}return i}function j(o,e){let t=[];for(let n of Array.from(e.segment(o))){let r=n.segment;t.length&&/\s/.test(t[t.length-1])&&/\s/.test(r)?t[t.length-1]+=r:t.push(r)}return t}function L(o,e){if(e)return C(o,e)[1];let t;for(t=o.length-1;t>=0&&o[t].match(/\s/);t--);return o.substring(t+1)}function x(o,e){if(e)return C(o,e)[0];let t=o.match(/^\s*/);return t?t[0]:""}function C(o,e){if(!e)return[x(o),L(o)];if(e.resolvedOptions().granularity!="word")throw new Error('The segmenter passed must have a granularity of "word"');let t=j(o,e),n=t[0],r=t[t.length-1],i=/\s/.test(n)?n:"",s=/\s/.test(r)?r:"";return[i,s]}var S="a-zA-Z0-9_\\u{AD}\\u{C0}-\\u{D6}\\u{D8}-\\u{F6}\\u{F8}-\\u{2C6}\\u{2C8}-\\u{2D7}\\u{2DE}-\\u{2FF}\\u{1E00}-\\u{1EFF}",se=new RegExp(`[${S}]+|\\s+|[^${S}]`,"ug"),B=class extends h{equals(e,t,n){return n.ignoreCase&&(e=e.toLowerCase(),t=t.toLowerCase()),e.trim()===t.trim()}tokenize(e,t={}){let n;if(t.intlSegmenter){let s=t.intlSegmenter;if(s.resolvedOptions().granularity!="word")throw new Error('The segmenter passed must have a granularity of "word"');n=j(e,s)}else n=e.match(se)||[];let r=[],i=null;return n.forEach(s=>{/\s/.test(s)?i==null?r.push(s):r.push(r.pop()+s):i!=null&&/\s/.test(i)?r[r.length-1]==i?r.push(r.pop()+s):r.push(i+s):r.push(s),i=s}),r}join(e){return e.map((t,n)=>n==0?t:t.replace(/^\s+/,"")).join("")}postProcess(e,t){if(!e||t.oneChangePerToken)return e;let n=null,r=null,i=null;return e.forEach(s=>{s.added?r=s:s.removed?i=s:((r||i)&&_(n,i,r,s,t.intlSegmenter),n=s,r=null,i=null)}),(r||i)&&_(n,i,r,null,t.intlSegmenter),e}},J=new B;function q(o,e,t){return t?.ignoreWhitespace!=null&&!t.ignoreWhitespace?X(o,e,t):J.diff(o,e,t)}function _(o,e,t,n,r){if(e&&t){let[i,s]=C(e.value,r),[c,u]=C(t.value,r);if(o){let l=M(i,c);o.value=W(o.value,c,l),e.value=w(e.value,l),t.value=w(t.value,l)}if(n){let l=A(s,u);n.value=E(n.value,u,l),e.value=D(e.value,l),t.value=D(t.value,l)}}else if(t){if(o){let i=x(t.value,r);t.value=t.value.substring(i.length)}if(n){let i=x(n.value,r);n.value=n.value.substring(i.length)}}else if(o&&n){let i=x(n.value,r),[s,c]=C(e.value,r),u=M(i,s);e.value=w(e.value,u);let l=A(w(i,u),c);e.value=D(e.value,l),n.value=E(n.value,i,l),o.value=W(o.value,i,i.slice(0,i.length-l.length))}else if(n){let i=x(n.value,r),s=L(e.value,r),c=F(s,i);e.value=D(e.value,c)}else if(o){let i=L(o.value,r),s=x(e.value,r),c=F(i,s);e.value=w(e.value,c)}}var R=class extends h{tokenize(e){let t=new RegExp(`(\\r?\\n)|[${S}]+|[^\\S\\n\\r]+|[^${S}]`,"ug");return e.match(t)||[]}},G=new R;function X(o,e,t){return G.diff(o,e,t)}var z=class extends h{constructor(){super(...arguments),this.tokenize=ae}equals(e,t,n){return n.ignoreWhitespace?((!n.newlineIsToken||!e.includes(`
+`))&&(e=e.trim()),(!n.newlineIsToken||!t.includes(`
+`))&&(t=t.trim())):n.ignoreNewlineAtEof&&!n.newlineIsToken&&(e.endsWith(`
+`)&&(e=e.slice(0,-1)),t.endsWith(`
+`)&&(t=t.slice(0,-1))),super.equals(e,t,n)}},Z=new z;function N(o,e,t){return Z.diff(o,e,t)}function ae(o,e){e.stripTrailingCr&&(o=o.replace(/\r\n/g,`
+`));let t=[],n=o.split(/(\n|\r\n)/);n[n.length-1]||n.pop();for(let r=0;r<n.length;r++){let i=n[r];r%2&&!e.newlineIsToken?t[t.length-1]+=i:t.push(i)}return t}var d=o=>document.getElementById(o),K=o=>String(o??"").replace(/[&<>"']/g,e=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[e]);function ee(o,e,t="application/octet-stream"){let n=o instanceof Blob?o:new Blob([o],{type:t}),r=document.createElement("a");r.href=URL.createObjectURL(n),r.download=e,document.body.appendChild(r),r.click(),r.remove(),setTimeout(()=>URL.revokeObjectURL(r.href),6e4)}var Q;function te(o,e=2600){let t=document.querySelector(".toast");t||(t=document.createElement("div"),t.className="toast",document.body.appendChild(t)),t.textContent=o,t.hidden=!1,clearTimeout(Q),Q=setTimeout(()=>{t.hidden=!0},e)}function ne(o,e,t){let n=document.createElement("input");n.type="file",n.accept=o,n.multiple=!!e,n.onchange=()=>{t([...n.files])},n.click()}d("app").innerHTML=`
+<div class="card"><h2>Textos</h2>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
+    <div><div class="row"><label style="margin:0">Vers\xE3o anterior</label><span class="spacer"></span><button class="small" id="fa">Abrir arquivo\u2026</button></div><textarea id="a" style="min-height:220px" placeholder="Cole aqui o texto original"></textarea></div>
+    <div><div class="row"><label style="margin:0">Vers\xE3o nova</label><span class="spacer"></span><button class="small" id="fb">Abrir arquivo\u2026</button></div><textarea id="b" style="min-height:220px" placeholder="Cole aqui o texto alterado"></textarea></div>
+  </div>
+  <div class="row mt">
+    <select id="mode" style="width:auto"><option value="words">Comparar por palavras</option><option value="lines">Comparar por linhas</option><option value="chars">Comparar por caracteres</option></select>
+    <label class="chk" style="margin:0"><input type="checkbox" id="ic"> Ignorar mai\xFAsculas/min\xFAsculas</label>
+    <label class="chk" style="margin:0"><input type="checkbox" id="iw"> Ignorar espa\xE7os extras</label>
+    <button class="primary" id="go">Comparar</button><button id="sw">Trocar lados</button><button id="dl" disabled>Baixar relat\xF3rio (HTML)</button>
+  </div>
+  <div class="note">Aceita arquivos de texto (.txt, .md, .csv, .json, .html). Para Word ou PDF, copie o texto e cole nas caixas (ou use "Extrair texto" no pacote de PDF).</div>
+</div>
+<div class="card" id="res" hidden><h2>Resultado</h2><div class="stat" id="stat"></div><div class="diff" id="diff"></div></div>`;function oe(o){ne(".txt,.md,.csv,.json,.html,.xml,.log,text/*",!1,async e=>{e[0]&&(d(o).value=await e[0].text())})}d("fa").onclick=()=>oe("a");d("fb").onclick=()=>oe("b");d("sw").onclick=()=>{let o=d("a").value;d("a").value=d("b").value,d("b").value=o};var re="";d("go").onclick=()=>{let o=d("a").value,e=d("b").value;if(!o&&!e)return te("Cole ou abra os dois textos.");let t={ignoreCase:d("ic").checked},n=d("mode").value;n!=="chars"&&d("iw").checked&&(t.ignoreWhitespace=!0);let r=(n==="lines"?N:n==="chars"?I:q)(o,e,t),i=0,s=0,c="",u=a=>n==="lines"?(a.match(/\n/g)||[]).length+(a.endsWith(`
+`)?0:1):n==="chars"?a.length:a.trim()?a.trim().split(/\s+/).length:0;for(let a of r){let p=K(a.value);a.added?(i+=u(a.value),c+=`<span class="add">${p}</span>`):a.removed?(s+=u(a.value),c+=`<span class="del">${p}</span>`):c+=p}let l=n==="lines"?"linhas":n==="chars"?"caracteres":"palavras";d("stat").innerHTML=`<div class="s"><b>${i}</b>${l} adicionadas</div><div class="s"><b>${s}</b>${l} removidas</div><div class="s"><b>${i+s===0?"Id\xEAnticos":"Diferentes"}</b>resultado</div>`,d("diff").innerHTML=c,d("res").hidden=!1,d("dl").disabled=!1,re=`<!DOCTYPE html><html lang="pt-BR"><meta charset="utf-8"><title>Compara\xE7\xE3o de textos</title><style>body{font:14px/1.5 ui-monospace,Consolas,monospace;padding:20px;white-space:pre-wrap}.add{background:#cdeed7}.del{background:#f8d0d0;text-decoration:line-through}</style><h2 style="font-family:sans-serif">Compara\xE7\xE3o de textos (${new Date().toLocaleString("pt-BR")})</h2><p style="font-family:sans-serif">${i} ${l} adicionadas, ${s} removidas. Verde = adicionado, vermelho riscado = removido.</p><hr>${c}</html>`};d("dl").onclick=()=>ee(new Blob([re],{type:"text/html;charset=utf-8"}),"comparacao.html");})();
+</script><script>if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(function(){});</script></body></html>
